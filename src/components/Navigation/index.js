@@ -2,27 +2,54 @@ import React from "react";
 import { Link } from "react-router-dom";
 import * as ROUTES from "../../constants/routes";
 
+// Responsive behavior depends on our Collapse JavaScript plugin
+
 const Navigation = () => {
   return (
-    <div>
-      <ul>
-        <li>
-          <Link to={ROUTES.SIGN_IN}>Sign In</Link>
-        </li>
-        <li>
-          <Link to={ROUTES.LANDING}>Landing</Link>
-        </li>
-        <li>
-          <Link to={ROUTES.HOME}>HOME</Link>
-        </li>
-        <li>
-          <Link to={ROUTES.ACCOUNT}>Account</Link>
-        </li>
-        <li>
-          <Link to={ROUTES.ADMIN}>Admin</Link>
-        </li>
-      </ul>
-    </div>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <Link className="navbar-brand" to={ROUTES.HOME}>
+        Mushroomon
+      </Link>
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarTogglerDemo02"
+        aria-controls="navbarTogglerDemo02"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span className="navbar-toggler-icon"></span>
+      </button>
+
+      <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul className="navbar-nav mr-auto">
+          <li className="nav-item">
+            <Link className="nav-link" to={ROUTES.LANDING}>
+              Landing
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to={ROUTES.ACCOUNT}>
+              My Account
+            </Link>
+          </li>
+          <li className="nav-item mr-3">
+            <Link className="nav-link " to={ROUTES.ADMIN}>
+              Admin
+            </Link>
+          </li>
+        </ul>
+
+        <ul className="navbar-nav">
+          <li className="nav-item">
+            <Link className="btn btn-secondary btn-s" to={ROUTES.SIGN_IN}>
+              Log in
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </nav>
   );
 };
 
