@@ -59,35 +59,58 @@ class SignUpFormBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <input
-          name="username"
-          value={username}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Full Name"
-        />
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          name="passwordOne"
-          value={passwordOne}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
-        <input
-          name="passwordTwo"
-          value={passwordTwo}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Confirm Password"
-        />
-        <button disabled={isInvalid} type="submit">
+        <div className="form-group">
+          <label for="exampleInputEmail1">Full Name</label>
+          <input
+            name="username"
+            class="form-control"
+            value={username}
+            onChange={this.onChange}
+            type="text"
+            placeholder="Enter name"
+          />
+        </div>
+        <div className="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input
+            name="email"
+            class="form-control"
+            value={email}
+            onChange={this.onChange}
+            type="email"
+            placeholder="Enter email"
+          />
+          <small id="emailHelp" class="form-text text-muted">
+            We'll never share your email with anyone else.
+          </small>
+        </div>
+        <div className="form-group">
+          <label for="exampleInputEmail1">Password</label>
+          <input
+            name="passwordOne"
+            class="form-control"
+            value={passwordOne}
+            onChange={this.onChange}
+            type="password"
+            placeholder="Password"
+          />
+        </div>
+        <div className="form-group">
+          <label for="exampleInputEmail1">Password</label>
+          <input
+            name="passwordTwo"
+            class="form-control"
+            value={passwordTwo}
+            onChange={this.onChange}
+            type="password"
+            placeholder="Confirm Password"
+          />
+        </div>
+        <button
+          className="btn btn-secondary"
+          disabled={isInvalid}
+          type="submit"
+        >
           Sign Up
         </button>
 
@@ -98,9 +121,13 @@ class SignUpFormBase extends Component {
 }
 
 const SignUpLink = () => (
-  <p>
-    Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
-  </p>
+  <form>
+    <div className="form-group">
+      <small id="emailHelp" class="form-text text-muted">
+        Don't have an account? {<Link to={ROUTES.SIGN_UP}>Sign Up</Link>}
+      </small>
+    </div>
+  </form>
 );
 
 const SignUpForm = compose(withRouter, withFirebase)(SignUpFormBase);
