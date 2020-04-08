@@ -1,6 +1,3 @@
-import React from "react";
-import app from "firebase/app";
-
 import FirebaseContext, { withFirebase } from "./context";
 import Firebase from "./firebase";
 

@@ -33,8 +33,23 @@ class SignUpFormBase extends Component {
     const { username, email, passwordOne } = this.state;
 
     this.props.firebase
+      // creates a user in Firebase's internal authentication database that is only limited accessible
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then((authUser) => {
+        // Create a user in Firebase realtime db
+        return this.props.firebase.db.collection("users").add({
+          first: "Ada",
+          last: "Lovelace",
+          born: 1815,
+          // })
+          // .user(authUser.user.uid)
+          //   .set({ username, email });
+        });
+      })
+      .then((docRef) => {
+        console.log("Document written with ID: ", docRef.id);
+      })
+      .then(() => {
         this.setState({ ...INITIAL_STATE });
         this.props.history.push(ROUTES.HOME);
       })
