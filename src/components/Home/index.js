@@ -1,16 +1,51 @@
-import React from "react";
+import React, { Component } from "react";
+// import { render } from "react-dom";
+import Gallery from "react-photo-gallery";
+// import { photos } from "./photos";
 
-import withAuthorization from "../Session";
+import firebase from "firebase";
 
-const HomePage = () => {
-  return (
-    <div>
-      <h1>Home</h1>
-      <p>The home page is accessible by every signed in user</p>
-    </div>
-  );
-};
+class BasicRows extends Component {
+  constructor(props) {
+    super(props);
 
-const condition = (authUser) => !!authUser;
+    this.state = {
+      loading: true,
+      photos: [],
+    };
+  }
 
-export default HomePage;
+  componentDidMount() {
+    this.getPhotos();
+    this.setState({ loading: false });
+    console.log(this.state.photos);
+  }
+
+  getPhotos() {
+    let photos = [...this.state.photos];
+
+    const storageRef = firebase.storage().ref();
+    const imagesRef = storageRef.child("images");
+    imagesRef.listAll().then((res) => {
+      res.items.forEach((itemRef) => {
+        itemRef.getDownloadURL().then((urlString) => {
+          let url = urlString;
+          photos = [...photos, { src: url, width: 4, height: 3 }];
+          this.setState({ photos });
+        });
+      });
+    });
+  }
+
+  render() {
+    const { loading, photos } = this.state;
+    return (
+      <div>
+        {loading && <div>Loading...</div>}
+        <Gallery photos={photos} />
+      </div>
+    );
+  }
+}
+
+export default BasicRows;

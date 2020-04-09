@@ -30,25 +30,20 @@ class SignUpFormBase extends Component {
   }
 
   onSubmit = (event) => {
-    const { username, email, passwordOne } = this.state;
+    const { email, passwordOne: password } = this.state;
 
     this.props.firebase
       // creates a user in Firebase's internal authentication database that is only limited accessible
-      .doCreateUserWithEmailAndPassword(email, passwordOne)
+      .doCreateUserWithEmailAndPassword(email, password)
       .then((authUser) => {
         // Create a user in Firebase realtime db
-        return this.props.firebase.db.collection("users").add({
-          first: "Ada",
-          last: "Lovelace",
-          born: 1815,
-          // })
-          // .user(authUser.user.uid)
-          //   .set({ username, email });
+        this.props.firebase.db.collection("users").doc(authUser.user.uid).set({
+          username: this.state.username,
+          email: this.state.email,
+          password: this.state.passwordOne,
         });
       })
-      .then((docRef) => {
-        console.log("Document written with ID: ", docRef.id);
-      })
+
       .then(() => {
         this.setState({ ...INITIAL_STATE });
         this.props.history.push(ROUTES.HOME);
@@ -70,15 +65,16 @@ class SignUpFormBase extends Component {
     const isInvalid =
       passwordOne !== passwordTwo ||
       passwordOne === "" ||
-      (email === "") | (username === "");
+      email === "" ||
+      username === "";
 
     return (
       <form onSubmit={this.onSubmit}>
         <div className="form-group">
-          <label for="exampleInputEmail1">Full Name</label>
+          <label htmlFor="exampleInputEmail1">Full Name</label>
           <input
             name="username"
-            class="form-control"
+            className="form-control"
             value={username}
             onChange={this.onChange}
             type="text"
@@ -86,24 +82,24 @@ class SignUpFormBase extends Component {
           />
         </div>
         <div className="form-group">
-          <label for="exampleInputEmail1">Email address</label>
+          <label htmlFor="exampleInputEmail1">Email address</label>
           <input
             name="email"
-            class="form-control"
+            className="form-control"
             value={email}
             onChange={this.onChange}
             type="email"
             placeholder="Enter email"
           />
-          <small id="emailHelp" class="form-text text-muted">
+          <small id="emailHelp" className="form-text text-muted">
             We'll never share your email with anyone else.
           </small>
         </div>
         <div className="form-group">
-          <label for="exampleInputEmail1">Password</label>
+          <label htmlFor="exampleInputEmail1">Password</label>
           <input
             name="passwordOne"
-            class="form-control"
+            className="form-control"
             value={passwordOne}
             onChange={this.onChange}
             type="password"
@@ -111,10 +107,10 @@ class SignUpFormBase extends Component {
           />
         </div>
         <div className="form-group">
-          <label for="exampleInputEmail1">Password</label>
+          <label htmlFor="exampleInputEmail1">Password</label>
           <input
             name="passwordTwo"
-            class="form-control"
+            className="form-control"
             value={passwordTwo}
             onChange={this.onChange}
             type="password"
@@ -138,7 +134,7 @@ class SignUpFormBase extends Component {
 const SignUpLink = () => (
   <form>
     <div className="form-group">
-      <small id="emailHelp" class="form-text text-muted">
+      <small id="emailHelp" className="form-text text-muted">
         Don't have an account? {<Link to={ROUTES.SIGN_UP}>Sign Up</Link>}
       </small>
     </div>

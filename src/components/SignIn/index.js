@@ -46,7 +46,7 @@ class SignInFormBase extends Component {
     const isInvalid = password === "" || email === "";
     return (
       <form onSubmit={this.onSubmit}>
-        <div class="form-group">
+        <div className="form-group">
           <label htmlFor="exampleInputEmail1">Email address</label>
 
           <input
@@ -58,7 +58,7 @@ class SignInFormBase extends Component {
             placeholder="Email Address"
           />
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <label htmlFor="exampleInputPassword">Password</label>
           <input
             name="password"

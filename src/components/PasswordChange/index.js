@@ -30,7 +30,7 @@ class PasswordChangeForm extends Component {
     const isInvalid = passwordOne !== passwordTwo || passwordOne === "";
     return (
       <form onSubmit={this.onSubmit}>
-        <div class="form-group">
+        <div className="form-group">
           <label htmlFor="exampleInputEmail1">New password</label>
           <input
             name="passwordOne"
@@ -41,7 +41,7 @@ class PasswordChangeForm extends Component {
             placeholder="Enter your new password"
           />
         </div>
-        <div class="form-group">
+        <div className="form-group">
           <label htmlFor="exampleInputEmail1">Confirm password</label>
           <input
             name="passwordTwo"

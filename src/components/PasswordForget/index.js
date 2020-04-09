@@ -39,8 +39,8 @@ class PasswordForgetFormBase extends Component {
     const isInvalid = email === "";
     return (
       <form onSubmit={this.onSubmit}>
-        <div class="form-group">
-          <label htmlFor="exampleInputEmail1">Email address</label>
+        <div className="form-group">
+          <label htmlFor="exampleInputEmail1">Forgot password?</label>
           <input
             name="email"
             className="form-control"
@@ -65,7 +65,7 @@ class PasswordForgetFormBase extends Component {
 const PasswordForgetLink = () => (
   <form>
     <div className="form-group">
-      <small id="emailHelp" class="form-text text-muted">
+      <small id="emailHelp" className="form-text text-muted">
         <Link to={ROUTES.PASSWORD_FORGET}>Forgot your Password?</Link>
       </small>
     </div>

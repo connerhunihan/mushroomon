@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 
-import * as ROLES from "../../constants/roles";
-
 import { withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
 
@@ -15,26 +13,30 @@ class AdminPage extends Component {
     };
   }
 
-  componentDidMount() {
-    this.setState({ loading: true });
-
-    this.props.firebase.users().on("value", (snapshot) => {
-      const usersObject = snapshot.val();
-
-      const usersList = Object.keys(usersObject).map((key) => ({
-        ...usersObject[key],
-        uid: key,
-      }));
-
-      this.setState({
-        users: usersList,
-        loading: false,
-      });
+  getUsers() {
+    const db = this.props.firebase.db;
+    db.settings({
+      timestampsInSnapshots: true,
     });
+    db.collection("users")
+      .get()
+      .then((querySnapshot) => {
+        const data = querySnapshot.docs.map((doc) => doc.data());
+        this.setState({
+          users: data,
+          loading: false,
+        });
+      });
+  }
+
+  componentDidMount() {
+    this.getUsers();
+    this.setState({ loading: true });
+    console.log(this.props.firebase);
   }
 
   componentWillUnmount() {
-    this.props.firebase.users().off();
+    // this.props.firebase.db.collection("users").onSnapshot();
   }
 
   render() {
@@ -52,24 +54,24 @@ class AdminPage extends Component {
 }
 
 const UserList = ({ users }) => (
-  <ul>
-    {users.map((user) => (
-      <li key={users.uid}>
-        <span>
-          <strong>ID:</strong>
-          {user.uid}
-        </span>
-        <span>
-          <strong>Email:</strong>
-          {user.email}
-        </span>
-        <span>
-          <strong>Username:</strong>
-          {user.username}
-        </span>
-      </li>
-    ))}
-  </ul>
+  <table className="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Password</th>
+      </tr>
+    </thead>
+    <tbody>
+      {users.map((user) => (
+        <tr>
+          <th scope="row">{user.username}</th>
+          <td>{user.email}</td>
+          <td>{user.password}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
 );
 
 // AVAILABLE FOR USERS WITH THE ADMIN ROLE

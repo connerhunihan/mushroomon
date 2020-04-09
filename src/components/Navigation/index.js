@@ -42,7 +42,7 @@ const NavigationAuth = ({ email }) => (
       <ul className="navbar-nav mr-auto">
         <li className="nav-item">
           <Link className="nav-link" to={ROUTES.LANDING}>
-            Landing
+            My Mushrooms
           </Link>
         </li>
         <li className="nav-item">
@@ -87,13 +87,7 @@ const NavigationNonAuth = () => (
     </button>
 
     <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-      <ul className="navbar-nav mr-auto">
-        <li className="nav-item">
-          <Link className="nav-link" to={ROUTES.LANDING}>
-            Landing
-          </Link>
-        </li>
-      </ul>
+      <ul className="navbar-nav mr-auto"></ul>
 
       <ul className="navbar-nav">
         <li className="nav-item">
